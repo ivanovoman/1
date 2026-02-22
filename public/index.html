@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Аудит персональных данных</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Аудит персональных данных</h1>
+      <p class="subtitle">Нажмите кнопку, чтобы перейти к оплате и получить доступ к аудиту.</p>
+      <button id="payButton" class="primary-button">Аудит ПДн</button>
+    </main>
+
+    <script>
+      const YOOMONEY_RECEIVER = '4100111111111111'; // TODO: замените на ваш receiver
+      const PRICE_RUB = '1990'; // TODO: замените сумму при необходимости
+      const SUCCESS_URL = `${window.location.origin}/success.html?paid=true`;
+
+      const payButton = document.getElementById('payButton');
+
+      payButton.addEventListener('click', () => {
+        const label = `pdn-audit-${Date.now()}`;
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'https://yoomoney.ru/quickpay/confirm.xml';
+        form.style.display = 'none';
+
+        const fields = {
+          receiver: YOOMONEY_RECEIVER,
+          'quickpay-form': 'button',
+          paymentType: 'AC',
+          sum: PRICE_RUB,
+          label,
+          successURL: SUCCESS_URL,
+          targets: 'Аудит персональных данных'
+        };
+
+        Object.entries(fields).forEach(([name, value]) => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = name;
+          input.value = value;
+          form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+      });
+    </script>
+  </body>
+</html>

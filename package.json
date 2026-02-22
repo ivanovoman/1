@@ -1,0 +1,9 @@
+{
+  "name": "pdn-audit-mvp",
+  "version": "1.0.0",
+  "description": "MVP веб-приложение \"Аудит ПДн\" с оплатой через ЮMoney и доступом к GPT",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Доступ к аудиту</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Результат оплаты</h1>
+      <section id="result" class="result"></section>
+    </main>
+
+    <script>
+      const GPT_URL = 'https://chat.openai.com/g/g-XXXXXXX'; // TODO: замените на URL вашего GPT
+
+      const result = document.getElementById('result');
+      const params = new URLSearchParams(window.location.search);
+      const isPaid = params.get('paid') === 'true';
+
+      if (isPaid) {
+        result.innerHTML = `
+          <p class="success">✅ Оплата подтверждена. Доступ к аудиту открыт.</p>
+          <a class="primary-button link-button" href="${GPT_URL}" target="_blank" rel="noopener noreferrer">Открыть аудит</a>
+          <p class="hint">Вы также можете встроить GPT через iframe в этом блоке, если это потребуется.</p>
+        `;
+      } else {
+        result.innerHTML = `
+          <p class="error">❌ Оплата не подтверждена.</p>
+          <a class="secondary-link" href="/">Вернуться на главную</a>
+        `;
+      }
+    </script>
+  </body>
+</html>
